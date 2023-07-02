@@ -1,0 +1,70 @@
+﻿@using PrimeraAplicacionOfficial_MVC.Models
+@model LoginCLS
+
+@{
+    Layout = null;
+    List<SelectListItem> listaUsuario = (List<SelectListItem>)ViewBag.lista;
+}
+
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <title>Mi primera aplicación ASP.NET</title>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="@Url.Content("~/magical/css/style.css")" type="text/css" media="all" />
+</head>
+
+<body>
+    <!-- login form -->
+    <section class="w3l-login">
+        <div class="overlay">
+            <div class="wrapper">
+                <div class="logo">
+                    <a class="brand-logo" href="index.html">ITES - Santa Rosa</a>
+                </div>
+                <div class="form-section">
+                    <h3>Cree su cuenta!</h3>
+                    <h6></h6>
+                    @using (Html.BeginForm("Registro", "Login", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        <form action="#" method="post" class="signin-form">
+                            <div class="form-input">
+                                @Html.TextBoxFor(p => p.USER, new { @placeholder = "Usuario", @class = "form-control" })
+                            </div>
+                            <div class="form-input">
+                                @Html.PasswordFor(p => p.PASS, new { @placeholder = "Contraseña", @class = "form-control" })
+                            </div>
+                            <label class="check-remaind">
+                            </label>
+                            <button type="submit" class="btn btn-primary theme-button mt-4">Crear cuenta</button>
+                            <div class="new-signup">
+                                <p class="signup">¿Ya tenias una cuenta? <a href="~/Login/Login" >Inicie sesion!</a></p>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+        <div id='stars'></div>
+        <div id='stars2'></div>
+        <div id='stars3'></div>
+
+        <!-- copyright -->
+        <div class="copy-right">
+            <p>&copy; 2023 ITES - Santa Rosa. Todos los derechos reservados | Diseñado por <a href="https://ites.edu.ar/" target="_blank">ITES - Santa Rosa</a></p>
+        </div>
+        <!-- //copyright -->
+    </section>
+
+    <!-- /login form -->
+</body>
+
+</html>

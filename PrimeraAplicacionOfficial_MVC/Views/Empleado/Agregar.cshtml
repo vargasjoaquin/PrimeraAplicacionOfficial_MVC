@@ -1,0 +1,86 @@
+﻿@using PrimeraAplicacionOfficial_MVC.Models
+@model EmpleadoCLS
+@{
+    ViewBag.Title = "Agregar";
+    List<SelectListItem> listaSexo = (List<SelectListItem>)ViewBag.lista;
+}
+
+<h2>Agregar Empleado</h2>
+
+
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Agregar", "Empleado", FormMethod.Post, new { @id = "frmConfirmacion" }))
+        {
+
+            <div>
+                @Html.LabelFor(p => p.NOMBRE)
+                @Html.TextBoxFor(p => p.NOMBRE, new { @class = "form-control" })
+                @Html.ValidationMessage("Nombre", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(p => p.APELLIDO)
+                @Html.TextBoxFor(p => p.APELLIDO, new { @class = "form-control" })
+                @Html.ValidationMessage("Apellido", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(p => p.DNI)
+                @Html.TextBoxFor(p => p.DNI, new { @class = "form-control" })
+                @Html.ValidationMessage("Dni", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(p => p.FECHACONTRATO)
+                @Html.EditorFor(p => p.FECHACONTRATO, new { HtmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div>
+                @Html.LabelFor(p => p.SUELDO)
+                @Html.TextBoxFor(p => p.SUELDO, new { @class = "form-control" })
+                @Html.ValidationMessage("Sueldo", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(p => p.IDSEXO)
+                @Html.DropDownList("IDSEXO", listaSexo, null, new { @class = "form-control" })
+                @Html.ValidationMessage("Sexo", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div style="margin:auto">
+                <div class="container">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Agregar empleado
+                    </button>
+                    <div>
+                        @Html.ActionLink("Volver", "Index", "Empleado", null, new { @class = "btn btn-info" })
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Agregar Empleado">ALERTA</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               ¿Deseas AGREGAR a este empleado?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" onclick="Agregar()" class="btn btn-primary">Agregar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Agregar() {
+        var frmConfirmacion = document.getElementById("frmConfirmacion");
+        frmConfirmacion.submit();
+    }
+</script>
+

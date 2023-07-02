@@ -1,0 +1,49 @@
+﻿@model List<PrimeraAplicacionOfficial_MVC.Models.EmpleadoCLS>
+
+<h1 align="center">Listado de Empleados</h1>
+<hr />
+
+
+
+@using (Html.BeginForm("IndexUser", "Empleado", FormMethod.Get))
+{
+    @Html.Label("Buscar por apellido")
+    @Html.TextBox("APELLIDO")
+
+    <input id="Button1" type="submit" class="btn btn-warning" value="Filtrar" />
+}
+<hr />
+<table class="table tab-content table-bordered table-hover">
+    <tr>
+        <td>ID</td>
+        <td align="center">Nombre</td>
+        <td align="center">Apellido</td>
+        <td align="center">DNI</td>
+        <td align="center">Fecha de Contrato</td>
+        <td align="center">Sueldo</td>
+        <td align="center">Sexo</td>
+    </tr>
+    <tbody>
+        @foreach (var oEmpleado in Model)
+        {
+            <tr>
+                <td>@oEmpleado.IDEMPLEADO</td>
+                <td>@oEmpleado.NOMBRE</td>
+                <td>@oEmpleado.APELLIDO</td>
+                <td>@oEmpleado.DNI</td>
+                <td>@oEmpleado.FECHACONTRATO</td>
+                <td>@oEmpleado.SUELDO</td>
+                <td>
+                    @if (oEmpleado.IDSEXO == 1)
+                    {
+                        <strong>Masculino</strong>
+                    }
+                    else
+                    {
+                        <strong>Femenino</strong>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

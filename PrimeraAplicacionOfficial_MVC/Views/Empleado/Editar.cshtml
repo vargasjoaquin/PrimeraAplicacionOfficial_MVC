@@ -1,0 +1,93 @@
+﻿@using PrimeraAplicacionOfficial_MVC.Models
+@model EmpleadoCLS
+
+@{
+    ViewBag.Title = "Editar";
+    List<SelectListItem> listaSexo = (List<SelectListItem>)ViewBag.lista;
+}
+
+<h2>Editar Empleado</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Editar", "Empleado", FormMethod.Post, new { @id = "frmConfirmacion" }))
+        {
+            <div class="form-group">
+                @Html.LabelFor(p => p.IDEMPLEADO, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.TextBoxFor(p => p.IDEMPLEADO, new { @class = "form-control", @readonly = true, style = "background-color: gray;" })
+                </div>
+            </div>
+
+
+            <div>
+                @Html.LabelFor(p => p.NOMBRE)
+                @Html.TextBoxFor(p => p.NOMBRE, new { @class = "form-control" })
+                @Html.ValidationMessage("Nombre", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(p => p.APELLIDO)
+                @Html.TextBoxFor(p => p.APELLIDO, new { @class = "form-control" })
+                @Html.ValidationMessage("Apellido", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(p => p.DNI)
+                @Html.TextBoxFor(p => p.DNI, new { @class = "form-control", @readonly = true, style = "background-color: gray;" })
+                @Html.ValidationMessage("Dni", new { @class = "text-danger" })
+            </div>
+
+            <div>
+                @Html.LabelFor(p => p.FECHACONTRATO)
+                @Html.EditorFor(p => p.FECHACONTRATO, new { HtmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div>
+                @Html.LabelFor(p => p.SUELDO)
+                @Html.TextBoxFor(p => p.SUELDO, new { @class = "form-control" })
+                @Html.ValidationMessage("Sueldo", new { @class = "text-danger" })
+            </div>
+            <div>
+                @Html.LabelFor(p => p.IDSEXO)
+                @Html.DropDownList("IDSEXO", listaSexo, null, new { @class = "form-control" })
+                @Html.ValidationMessage("Sexo", new { @class = "text-danger" })
+            </div>
+            <br />
+            <div style="margin:auto">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Editar empleado
+                </button>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Volver", "Index", "Empleado", null, new { @class = "btn btn-info" })
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">ALERTA</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+             ¿Seguro que deseas EDITAR a este empleado?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <button type="button" onclick="Editar()" class="btn btn-primary">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function Editar() {
+        var frmConfirmacion = document.getElementById("frmConfirmacion");
+        frmConfirmacion.submit();
+    }
+</script>

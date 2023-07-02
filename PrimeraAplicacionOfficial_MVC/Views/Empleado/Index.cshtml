@@ -1,0 +1,85 @@
+﻿@model List<PrimeraAplicacionOfficial_MVC.Models.EmpleadoCLS>
+
+
+<h1 align="center">Listado de Empleados</h1>
+<hr />
+@Html.ActionLink("Agregar Empleado", "Agregar", "Empleado", null, new { @class = "btn btn-primary" })
+@Html.ActionLink("GENERAR PDF", "generarPDF", "Empleado", null, new { @class = "btn btn-primary", @target = " " })
+@Html.ActionLink("GENERAR Excel", "generarExcel", "Empleado", null, new { @class = "btn btn-success" })
+<hr />
+@using (Html.BeginForm("Index", "Empleado", FormMethod.Get))
+{
+    @Html.Label("Buscar por apellido")
+    @Html.TextBox("APELLIDO")
+
+    <input id="Button1" type="submit" class="btn btn-warning" value="Filtrar" />
+}
+<hr />
+<table class="table tab-content table-bordered table-hover">
+    <tr>
+        <td>ID</td>
+        <td align="center">Nombre</td>
+        <td align="center">Apellido</td>
+        <td align="center">DNI</td>
+        <td align="center">Fecha de Contrato</td>
+        <td align="center">Sueldo</td>
+        <td align="center">Sexo</td>
+        <td align="center">Operaciones </td>
+    </tr>
+    <tbody>
+        @foreach (var oEmpleado in Model)
+        {
+            <tr>
+                <td>@oEmpleado.IDEMPLEADO</td>
+                <td>@oEmpleado.NOMBRE</td>
+                <td>@oEmpleado.APELLIDO</td>
+                <td>@oEmpleado.DNI</td>
+                <td>@oEmpleado.FECHACONTRATO</td>
+                <td>@oEmpleado.SUELDO</td>
+                <td>
+                    @if (oEmpleado.IDSEXO == 1)
+                    {
+                        <strong>Masculino</strong>
+                    }
+                    else
+                    {
+                        <strong>Femenino</strong>
+                    }
+                </td>
+                <td align="center">
+                    <a href="@Url.Action("Editar", "Empleado", new { id = oEmpleado.IDEMPLEADO })" class="btn btn-primary">
+                        <img src="~/images/pencil-square.svg" alt="Editar" class="editar-icon" />
+                    </a>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarModal-@oEmpleado.IDEMPLEADO">
+                        <img src="~/images/trash-fill.svg" alt="Eliminar" class="editar-icon" />
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@foreach (var oEmpleado in Model)
+{
+<div class="modal fade" id="eliminarModal-@oEmpleado.IDEMPLEADO" tabindex="-1" role="dialog" aria-labelledby="eliminarModalLabel-@oEmpleado.IDEMPLEADO" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="eliminarModalLabel-@oEmpleado.IDEMPLEADO">ALERTA</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>¿Estás seguro de que deseas ELIMINAR el empleado?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                <a href="@Url.Action("Eliminar", "Empleado", new { id = oEmpleado.IDEMPLEADO })" class="btn btn-primary">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+}
+
+
+
+
