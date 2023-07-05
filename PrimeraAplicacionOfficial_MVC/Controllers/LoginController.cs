@@ -41,7 +41,7 @@ namespace PrimeraAplicacionOfficial_MVC.Controllers
             }
             return View(objUser);
         }
-        List<SelectListItem> listaUsuario;
+       
 
         public ActionResult Logout()
         {
@@ -62,7 +62,6 @@ namespace PrimeraAplicacionOfficial_MVC.Controllers
 
             if (!ModelState.IsValid)
             {
-                ViewBag.lista = listaUsuario;
                 return View(oLoginCLS);
             }
             else
@@ -80,8 +79,5 @@ namespace PrimeraAplicacionOfficial_MVC.Controllers
             }
             return RedirectToAction("Login");
         }
-
-        
-
     }
 }

@@ -29,38 +29,44 @@ namespace PrimeraAplicacionOfficial_MVC.Controllers
                 ew.Cells[1, 1].Value = "ID Empleado";
                 ew.Cells[1, 2].Value = "Nombre";
                 ew.Cells[1, 3].Value = "Apellido";
-                ew.Cells[1, 4].Value = "Fecha Contrato";
+                ew.Cells[1, 4].Value = "DNI";
                 ew.Cells[1, 5].Value = "Sueldo";
-
+                
 
                 ew.Column(1).Width = 20;
                 ew.Column(2).Width = 60;
                 ew.Column(3).Width = 60;
                 ew.Column(4).Width = 60;
-                ew.Column(5).Width = 60;
-
-
+                ew.Column(5).Width = 90;
+                
+               
                 using (var range = ew.Cells[1, 1, 1, 6])
                 {
                     range.Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
                     range.Style.Font.Color.SetColor(Color.White);
                     range.Style.Fill.BackgroundColor.SetColor(Color.DarkKhaki);
                 }
+
                 List<EmpleadoCLS> lista = (List<EmpleadoCLS>)Session["lista"];
                 int nregistros = lista.Count;
+
                 for (int i = 0; i < nregistros; i++)
                 {
                     ew.Cells[i + 2, 1].Value = lista[i].IDEMPLEADO;
                     ew.Cells[i + 2, 2].Value = lista[i].NOMBRE;
                     ew.Cells[i + 2, 3].Value = lista[i].APELLIDO;
-                    ew.Cells[i + 2, 4].Value = lista[i].FECHACONTRATO;
-                    ew.Cells[i + 2, 5].Value = lista[i].SUELDO;
+                    ew.Cells[i + 2, 4].Value = lista[i].DNI;
+                    ew.Cells[i + 2, 6].Value = lista[i].SUELDO;
+                    
                 }
+
                 ep.SaveAs(ms);
                 buffer = ms.ToArray();
             }
-            return File(buffer, "application/vdn.ms-exel");
+
+            return File(buffer, "application/vnd.ms-excel");
         }
+
 
         public FileResult generarPDF()
         {
@@ -116,6 +122,7 @@ namespace PrimeraAplicacionOfficial_MVC.Controllers
                     tabla.AddCell(lista[i].APELLIDO);
                     tabla.AddCell(lista[i].DNI.ToString());
                     tabla.AddCell(lista[i].SUELDO.ToString());
+                  
                 }
                 doc.Add(tabla);
                 doc.Close();
