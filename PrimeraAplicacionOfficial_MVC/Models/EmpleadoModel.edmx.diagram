@@ -10,6 +10,13 @@
         <EntityTypeShape EntityType="v2Model.SEXO" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="v2Model.sysdiagrams" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
         <AssociationConnector Association="v2Model.FK_EMPLEADO_SEXO" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="v2Model.PAGINA" Width="1.5" PointX="5.375" PointY="8.75" />
+        <EntityTypeShape EntityType="v2Model.ROL" Width="1.5" PointX="5.375" PointY="5.75" />
+        <EntityTypeShape EntityType="v2Model.ROL_PAGINA" Width="1.5" PointX="7.625" PointY="4.75" />
+        <EntityTypeShape EntityType="v2Model.USUARIO" Width="1.5" PointX="7.625" PointY="8.5" />
+        <AssociationConnector Association="v2Model.FK__ROL_PAGIN__IDPAG__6477ECF3" />
+        <AssociationConnector Association="v2Model.FK__ROL_PAGIN__IDROL__6383C8BA" />
+        <AssociationConnector Association="v2Model.FK__USUARIO__IDROL__5EBF139D" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

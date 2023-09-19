@@ -29,5 +29,9 @@ namespace PrimeraAplicacionOfficial_MVC.Models
         public virtual DbSet<LOGIN> LOGIN { get; set; }
         public virtual DbSet<SEXO> SEXO { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<PAGINA> PAGINA { get; set; }
+        public virtual DbSet<ROL> ROL { get; set; }
+        public virtual DbSet<ROL_PAGINA> ROL_PAGINA { get; set; }
+        public virtual DbSet<USUARIO> USUARIO { get; set; }
     }
 }

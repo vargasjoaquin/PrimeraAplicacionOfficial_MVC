@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="v2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="v2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="EMPLEADO">
           <Key>
             <PropertyRef Name="IDEMPLEADO" />
@@ -31,6 +31,34 @@
           <Property Name="PASS" Type="varchar" MaxLength="50" />
           <Property Name="HABILITADO" Type="int" />
         </EntityType>
+        <EntityType Name="PAGINA">
+          <Key>
+            <PropertyRef Name="IDPAGINA" />
+          </Key>
+          <Property Name="IDPAGINA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MENSAJE" Type="varchar" MaxLength="50" />
+          <Property Name="ACCION" Type="varchar" MaxLength="50" />
+          <Property Name="CONTROLADOR" Type="varchar" MaxLength="100" />
+          <Property Name="HABILITADO" Type="int" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="IDROL" />
+          </Key>
+          <Property Name="IDROL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBRE" Type="varchar" MaxLength="100" />
+          <Property Name="DESCRIPCION" Type="varchar" MaxLength="100" />
+          <Property Name="HABILITADO" Type="int" />
+        </EntityType>
+        <EntityType Name="ROL_PAGINA">
+          <Key>
+            <PropertyRef Name="IDROLPAGINA" />
+          </Key>
+          <Property Name="IDROLPAGINA" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDROL" Type="int" />
+          <Property Name="IDPAGINA" Type="int" />
+          <Property Name="HABILITADO" Type="int" />
+        </EntityType>
         <EntityType Name="SEXO">
           <Key>
             <PropertyRef Name="IDSEXO" />
@@ -49,6 +77,54 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="IDUSUARIO" />
+          </Key>
+          <Property Name="IDUSUARIO" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NOMBREUSUARIO" Type="varchar" MaxLength="100" />
+          <Property Name="CONTRASEÑA" Type="varchar" MaxLength="100" />
+          <Property Name="TIPOUSUARIO" Type="char" MaxLength="1" />
+          <Property Name="ID" Type="int" />
+          <Property Name="IDROL" Type="int" />
+          <Property Name="HABLITADO" Type="int" />
+        </EntityType>
+        <Association Name="FK__ROL_PAGIN__IDPAG__6477ECF3">
+          <End Role="PAGINA" Type="Self.PAGINA" Multiplicity="0..1" />
+          <End Role="ROL_PAGINA" Type="Self.ROL_PAGINA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PAGINA">
+              <PropertyRef Name="IDPAGINA" />
+            </Principal>
+            <Dependent Role="ROL_PAGINA">
+              <PropertyRef Name="IDPAGINA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROL_PAGIN__IDROL__6383C8BA">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="0..1" />
+          <End Role="ROL_PAGINA" Type="Self.ROL_PAGINA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="IDROL" />
+            </Principal>
+            <Dependent Role="ROL_PAGINA">
+              <PropertyRef Name="IDROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__IDROL__5EBF139D">
+          <End Role="ROL" Type="Self.ROL" Multiplicity="0..1" />
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="IDROL" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="IDROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EMPLEADO_SEXO">
           <End Role="SEXO" Type="Self.SEXO" Multiplicity="0..1" />
           <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
@@ -64,15 +140,30 @@
         <EntityContainer Name="v2ModelStoreContainer">
           <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOGIN" EntityType="Self.LOGIN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PAGINA" EntityType="Self.PAGINA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROL" EntityType="Self.ROL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROL_PAGINA" EntityType="Self.ROL_PAGINA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SEXO" EntityType="Self.SEXO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ROL_PAGIN__IDPAG__6477ECF3" Association="Self.FK__ROL_PAGIN__IDPAG__6477ECF3">
+            <End Role="PAGINA" EntitySet="PAGINA" />
+            <End Role="ROL_PAGINA" EntitySet="ROL_PAGINA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROL_PAGIN__IDROL__6383C8BA" Association="Self.FK__ROL_PAGIN__IDROL__6383C8BA">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="ROL_PAGINA" EntitySet="ROL_PAGINA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__IDROL__5EBF139D" Association="Self.FK__USUARIO__IDROL__5EBF139D">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
           <AssociationSet Name="FK_EMPLEADO_SEXO" Association="Self.FK_EMPLEADO_SEXO">
             <End Role="SEXO" EntitySet="SEXO" />
             <End Role="EMPLEADO" EntitySet="EMPLEADO" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="v2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -143,7 +234,105 @@
             <End Role="SEXO" EntitySet="SEXO" />
             <End Role="EMPLEADO" EntitySet="EMPLEADO" />
           </AssociationSet>
+          <EntitySet Name="PAGINA" EntityType="v2Model.PAGINA" />
+          <EntitySet Name="ROL" EntityType="v2Model.ROL" />
+          <EntitySet Name="ROL_PAGINA" EntityType="v2Model.ROL_PAGINA" />
+          <EntitySet Name="USUARIO" EntityType="v2Model.USUARIO" />
+          <AssociationSet Name="FK__ROL_PAGIN__IDPAG__6477ECF3" Association="v2Model.FK__ROL_PAGIN__IDPAG__6477ECF3">
+            <End Role="PAGINA" EntitySet="PAGINA" />
+            <End Role="ROL_PAGINA" EntitySet="ROL_PAGINA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROL_PAGIN__IDROL__6383C8BA" Association="v2Model.FK__ROL_PAGIN__IDROL__6383C8BA">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="ROL_PAGINA" EntitySet="ROL_PAGINA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USUARIO__IDROL__5EBF139D" Association="v2Model.FK__USUARIO__IDROL__5EBF139D">
+            <End Role="ROL" EntitySet="ROL" />
+            <End Role="USUARIO" EntitySet="USUARIO" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="PAGINA">
+          <Key>
+            <PropertyRef Name="IDPAGINA" />
+          </Key>
+          <Property Name="IDPAGINA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MENSAJE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ACCION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CONTROLADOR" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HABILITADO" Type="Int32" />
+          <NavigationProperty Name="ROL_PAGINA" Relationship="v2Model.FK__ROL_PAGIN__IDPAG__6477ECF3" FromRole="PAGINA" ToRole="ROL_PAGINA" />
+        </EntityType>
+        <EntityType Name="ROL">
+          <Key>
+            <PropertyRef Name="IDROL" />
+          </Key>
+          <Property Name="IDROL" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBRE" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DESCRIPCION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HABILITADO" Type="Int32" />
+          <NavigationProperty Name="ROL_PAGINA" Relationship="v2Model.FK__ROL_PAGIN__IDROL__6383C8BA" FromRole="ROL" ToRole="ROL_PAGINA" />
+          <NavigationProperty Name="USUARIO" Relationship="v2Model.FK__USUARIO__IDROL__5EBF139D" FromRole="ROL" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="ROL_PAGINA">
+          <Key>
+            <PropertyRef Name="IDROLPAGINA" />
+          </Key>
+          <Property Name="IDROLPAGINA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDROL" Type="Int32" />
+          <Property Name="IDPAGINA" Type="Int32" />
+          <Property Name="HABILITADO" Type="Int32" />
+          <NavigationProperty Name="PAGINA" Relationship="v2Model.FK__ROL_PAGIN__IDPAG__6477ECF3" FromRole="ROL_PAGINA" ToRole="PAGINA" />
+          <NavigationProperty Name="ROL" Relationship="v2Model.FK__ROL_PAGIN__IDROL__6383C8BA" FromRole="ROL_PAGINA" ToRole="ROL" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="IDUSUARIO" />
+          </Key>
+          <Property Name="IDUSUARIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NOMBREUSUARIO" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CONTRASEÑA" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TIPOUSUARIO" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="ID" Type="Int32" />
+          <Property Name="IDROL" Type="Int32" />
+          <Property Name="HABLITADO" Type="Int32" />
+          <NavigationProperty Name="ROL" Relationship="v2Model.FK__USUARIO__IDROL__5EBF139D" FromRole="USUARIO" ToRole="ROL" />
+        </EntityType>
+        <Association Name="FK__ROL_PAGIN__IDPAG__6477ECF3">
+          <End Type="v2Model.PAGINA" Role="PAGINA" Multiplicity="0..1" />
+          <End Type="v2Model.ROL_PAGINA" Role="ROL_PAGINA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PAGINA">
+              <PropertyRef Name="IDPAGINA" />
+            </Principal>
+            <Dependent Role="ROL_PAGINA">
+              <PropertyRef Name="IDPAGINA" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROL_PAGIN__IDROL__6383C8BA">
+          <End Type="v2Model.ROL" Role="ROL" Multiplicity="0..1" />
+          <End Type="v2Model.ROL_PAGINA" Role="ROL_PAGINA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="IDROL" />
+            </Principal>
+            <Dependent Role="ROL_PAGINA">
+              <PropertyRef Name="IDROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USUARIO__IDROL__5EBF139D">
+          <End Type="v2Model.ROL" Role="ROL" Multiplicity="0..1" />
+          <End Type="v2Model.USUARIO" Role="USUARIO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROL">
+              <PropertyRef Name="IDROL" />
+            </Principal>
+            <Dependent Role="USUARIO">
+              <PropertyRef Name="IDROL" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -195,6 +384,50 @@
                 <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
                 <ScalarProperty Name="version" ColumnName="version" />
                 <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PAGINA">
+            <EntityTypeMapping TypeName="v2Model.PAGINA">
+              <MappingFragment StoreEntitySet="PAGINA">
+                <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+                <ScalarProperty Name="CONTROLADOR" ColumnName="CONTROLADOR" />
+                <ScalarProperty Name="ACCION" ColumnName="ACCION" />
+                <ScalarProperty Name="MENSAJE" ColumnName="MENSAJE" />
+                <ScalarProperty Name="IDPAGINA" ColumnName="IDPAGINA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROL">
+            <EntityTypeMapping TypeName="v2Model.ROL">
+              <MappingFragment StoreEntitySet="ROL">
+                <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+                <ScalarProperty Name="DESCRIPCION" ColumnName="DESCRIPCION" />
+                <ScalarProperty Name="NOMBRE" ColumnName="NOMBRE" />
+                <ScalarProperty Name="IDROL" ColumnName="IDROL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROL_PAGINA">
+            <EntityTypeMapping TypeName="v2Model.ROL_PAGINA">
+              <MappingFragment StoreEntitySet="ROL_PAGINA">
+                <ScalarProperty Name="HABILITADO" ColumnName="HABILITADO" />
+                <ScalarProperty Name="IDPAGINA" ColumnName="IDPAGINA" />
+                <ScalarProperty Name="IDROL" ColumnName="IDROL" />
+                <ScalarProperty Name="IDROLPAGINA" ColumnName="IDROLPAGINA" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIO">
+            <EntityTypeMapping TypeName="v2Model.USUARIO">
+              <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="HABLITADO" ColumnName="HABLITADO" />
+                <ScalarProperty Name="IDROL" ColumnName="IDROL" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TIPOUSUARIO" ColumnName="TIPOUSUARIO" />
+                <ScalarProperty Name="CONTRASEÑA" ColumnName="CONTRASEÑA" />
+                <ScalarProperty Name="NOMBREUSUARIO" ColumnName="NOMBREUSUARIO" />
+                <ScalarProperty Name="IDUSUARIO" ColumnName="IDUSUARIO" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

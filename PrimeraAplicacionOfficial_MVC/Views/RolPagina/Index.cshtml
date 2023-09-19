@@ -1,0 +1,23 @@
+﻿@using PrimeraAplicacionOfficial_MVC.Models;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<table class="table tab-content table-bordered table-hover">
+    <tr>
+        <td>ID ROL PAGINA</td>
+        <td align="center">ID ROL</td>
+        <td align="center">ID PAGINA</td>
+    </tr>
+    <tbody>
+        @foreach (var oRolPagina in Model)
+        {
+            <tr>
+                <td>@oRolPagina.IDROLPAGINA</td>
+                <td>@oRolPagina.IDROL</td>
+                <td>@oRolPagina.IDPAGINA</td>
+            </tr>
+        }
+    </tbody>
+</table>

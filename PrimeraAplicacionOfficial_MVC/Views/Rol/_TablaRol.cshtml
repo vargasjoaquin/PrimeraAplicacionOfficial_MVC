@@ -1,0 +1,35 @@
+﻿@model List<PrimeraAplicacionOfficial_MVC.Models.RolCLS>
+
+<table class="table tab-content table-bordered table-hover">
+    <tr>
+        <td align="center"><strong>ID</strong></td>
+        <td align="center"><strong>NOMBRE</strong></td>
+        <td align="center"><strong>DESCRIPCION</strong></td>
+        <td align="center"><strong>OPERACIONES</strong></td>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="text-align: center;">
+                @Html.DisplayFor(modelItem => item.IDROL)
+            </td>
+            <td style="text-align: center;">
+                @Html.DisplayFor(modelItem => item.NOMBRE)
+            </td>
+            <td style="text-align: center;">
+                @Html.DisplayFor(modelItem => item.DESCRIPCION)
+            </td>
+            <td style="text-align: center;">
+                <button type="button" onclick="Editar(@item.IDROL)" class="btn btn-primary glyphicon-edit" data-toggle="modal" data-target="#exampleModal">
+                    <img src="~/images/pencil-square.svg" alt="Editar" class="editar-icon" />
+                </button>
+                <button type="button" onclick="Eliminar(@item.IDROL)" class="btn btn-danger glyphicon-trash" data-toggle="modal" data-target="#EliminarConfirmacion">
+                    <img src="~/images/trash-fill.svg" alt="Eliminar" class="editar-icon" />
+                </button>
+            </td>
+        </tr>
+    }
+
+
+</table>

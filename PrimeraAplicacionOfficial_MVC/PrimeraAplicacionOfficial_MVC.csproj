@@ -139,6 +139,8 @@
     <Compile Include="Controllers\EmpleadoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RolController.cs" />
+    <Compile Include="Controllers\RolPaginaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -165,11 +167,25 @@
       <DependentUpon>EmpleadoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginCLS.cs" />
+    <Compile Include="Models\PAGINA.cs">
+      <DependentUpon>EmpleadoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ROL.cs">
+      <DependentUpon>EmpleadoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RolCLS.cs" />
+    <Compile Include="Models\RolPaginaCLS.cs" />
+    <Compile Include="Models\ROL_PAGINA.cs">
+      <DependentUpon>EmpleadoModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SEXO.cs">
       <DependentUpon>EmpleadoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SexoCLS.cs" />
     <Compile Include="Models\sysdiagrams.cs">
+      <DependentUpon>EmpleadoModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USUARIO.cs">
       <DependentUpon>EmpleadoModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -231,6 +247,8 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -257,6 +275,9 @@
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Empleado\IndexUser.cshtml" />
     <Content Include="Views\Login\Registro.cshtml" />
+    <Content Include="Views\Rol\Index.cshtml" />
+    <Content Include="Views\RolPagina\Index.cshtml" />
+    <Content Include="Views\Rol\_TablaRol.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
