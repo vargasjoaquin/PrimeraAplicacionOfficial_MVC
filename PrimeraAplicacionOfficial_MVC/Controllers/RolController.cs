@@ -115,26 +115,32 @@ namespace PrimeraAplicacionOfficial_MVC.Controllers
                     rpta += "</ul>";
                 }
                 else
-                { 
+                {
                     using (var db = new Entities2023())
                     {
+                        bool ROL_Existente = db.ROL.Any(e => e.NOMBRE == oRolCLS.NOMBRE);
+
                         if (titulo == -1)
                         {
-                            ROL oRol = new ROL();
-                            oRol.IDROL = oRolCLS.IDROL;
-                            oRol.NOMBRE = oRolCLS.NOMBRE;
-                            oRol.DESCRIPCION = oRolCLS.DESCRIPCION;
-                            oRol.HABILITADO = 1;
-                            db.ROL.Add(oRol);
-                            rpta = db.SaveChanges().ToString();
-                            if (rpta == "0") rpta = "";
-                        }
-                        else
-                        {
-                            ROL oRol = db.ROL.Where(p => p.IDROL == titulo).First();
-                            oRol.NOMBRE = oRolCLS.NOMBRE;
-                            oRol.DESCRIPCION = oRolCLS.DESCRIPCION;
-                            rpta = db.SaveChanges().ToString();
+                            if (!ROL_Existente)
+                            {
+                                ROL oRol = new ROL();
+                                oRol.IDROL = oRolCLS.IDROL;
+                                oRol.NOMBRE = oRolCLS.NOMBRE;
+                                oRol.DESCRIPCION = oRolCLS.DESCRIPCION;
+                                oRol.HABILITADO = 1;
+                                db.ROL.Add(oRol);
+                                rpta = db.SaveChanges().ToString();
+                                if (rpta == "0") rpta = "";
+                            }
+                            else
+                            {
+                                rpta = "El rol ya existe en la base de datos";
+                                //ROL oRol = db.ROL.Where(p => p.IDROL == titulo).First();
+                                //oRol.NOMBRE = oRolCLS.NOMBRE;
+                                //oRol.DESCRIPCION = oRolCLS.DESCRIPCION;
+                                //rpta = db.SaveChanges().ToString();
+                            }
                         }
                     }
                 }
